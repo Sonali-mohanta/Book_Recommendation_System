@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Recommender System</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        .container {
+            max-width: 500px;
+            margin: auto;
+            margin-top: 50px;
+        }
+        .btn-success {
+            background-color:#007bff ;
+            border-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">Registration</h2>
+        <form name="registration_form" id="registration_form" method="post" action="#" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" name="email" id="email" class="form-control" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password">
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="Confirm your password">
+            </div>
+            <button type="button" id="register" name="register" class="btn btn-primary btn-block mb-3">Register Now</button>
+            <a href="/" class="btn btn-primary btn-block">Login</a>
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+
+        const firebaseConfig = {
+        apiKey: "AIzaSyC2D9k6vywuX06t4OJRtLNikMYQQm6HMjc",
+        authDomain: "book-62b86.firebaseapp.com",
+        projectId: "book-62b86",
+        storageBucket: "book-62b86.appspot.com",
+        messagingSenderId: "1042550790510",
+        appId: "1:1042550790510:web:8ae28e7ec38c76283c497f",
+        measurementId: "G-6N4R8PVX1T",
+      };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+
+        document.getElementById("register").addEventListener("click", function() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm_password").value;
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log(user);
+                alert("Registration successful!");
+                window.location.href = "/";
+            })
+            .catch((error) => {
+                const errorMessage = error.message;
+                console.log(errorMessage);
+                alert(errorMessage);
+            });
+        });
+    </script>
+</body>
+</html>
